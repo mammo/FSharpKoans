@@ -57,6 +57,20 @@ module ``about the stock example`` =
 
     [<Koan>]
     let YouGotTheAnswerCorrect() =
-        let result =  __
-        
+
+        let splitCommas (x:string) =
+            x.Split([|','|])
+
+        let dayDifference (dl:string[]) = 
+            (dl.[0],  abs(System.Double.Parse(dl.[1]) - System.Double.Parse(dl.[4])))
+
+        let result =
+            stockData
+            |> Seq.skip 1
+            |> Seq.map splitCommas
+            |> Seq.map dayDifference 
+            |> Seq.sortBy ( fun x -> - snd x)
+            |> Seq.head
+            |> fst
+
         AssertEquality "2012-03-13" result
